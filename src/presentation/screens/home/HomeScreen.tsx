@@ -100,22 +100,22 @@ export const HomeScreen = ({}: HomeScreenProps): React.JSX.Element => {
 
           <View style={styles.separatorItemSection} />
 
-          {menuItems.map(item => (
+          {uiMenuItems.map(item => (
             <MenuItem
               key={item.component}
-              isFirst={item === menuItems[0]}
-              isLast={item === menuItems[menuItems.length - 1]}
+              isFirst={item === uiMenuItems[0]}
+              isLast={item === uiMenuItems[uiMenuItems.length - 1]}
               {...item}
             />
           ))}
 
           <View style={styles.separatorItemSection} />
 
-          {uiMenuItems.map(item => (
+          {menuItems.map(item => (
             <MenuItem
               key={item.component}
-              isFirst={item === uiMenuItems[0]}
-              isLast={item === uiMenuItems[uiMenuItems.length - 1]}
+              isFirst={item === menuItems[0]}
+              isLast={item === menuItems[menuItems.length - 1]}
               {...item}
             />
           ))}

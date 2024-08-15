@@ -30,6 +30,15 @@ export const globalStyles = StyleSheet.create({
     fontWeight: 'bold',
     color: colors.text,
   },
+  input: {
+    height: 50,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+    borderColor: 'rgba(0,0,0,0.2)',
+    borderRadius: 10,
+    color: colors.text,
+  },
 
   mainContainer: {
     flex: 1,

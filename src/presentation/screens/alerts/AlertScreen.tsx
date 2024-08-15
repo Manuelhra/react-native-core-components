@@ -36,6 +36,16 @@ export const AlertScreen = ({}: AlertScreenProps): React.JSX.Element => {
       {text: 'OK', onPress: () => console.log('OK Pressed')},
     ]);
 
+  // Just for iOS
+  const showPrompt = () => {
+    // Native code
+    Alert.prompt(
+      'Are you sure?',
+      'This action cannot be undone',
+      (value: string) => console.log(value),
+    );
+  };
+
   return (
     <CustomView>
       <Title text="Alerts" />
@@ -48,7 +58,7 @@ export const AlertScreen = ({}: AlertScreenProps): React.JSX.Element => {
 
       <View style={styles.separator} />
 
-      <Button text="Alert - Prompt" />
+      <Button text="Alert - Prompt" onPress={showPrompt} />
     </CustomView>
   );
 };
