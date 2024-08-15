@@ -5,6 +5,7 @@ import {NavigationProp, useNavigation} from '@react-navigation/native';
 
 import {colors} from '../../../config/theme/theme';
 import {NavigationParams} from '../../navigation/Navigation';
+import {Separator} from './Separator';
 
 type MenuItemProps = {
   name: string;
@@ -48,13 +49,21 @@ export const MenuItem = ({
   };
 
   return (
-    <Pressable onPress={() => navigation.navigate(component)}>
-      <View style={[styles.container, getContainerCustomStyles()]}>
-        <IonIcon name={icon} style={styles.ionIcon} />
-        <Text style={styles.text}>{name}</Text>
-        <IonIcon name="chevron-forward-outline" style={styles.chevronIcon} />
-      </View>
-    </Pressable>
+    <>
+      <Pressable onPress={() => navigation.navigate(component)}>
+        <View style={[styles.container, getContainerCustomStyles()]}>
+          <IonIcon name={icon} style={styles.ionIcon} />
+          <Text style={styles.text}>{name}</Text>
+          <IonIcon name="chevron-forward-outline" style={styles.chevronIcon} />
+        </View>
+      </Pressable>
+
+      {isLast === false && (
+        <View>
+          <Separator />
+        </View>
+      )}
+    </>
   );
 };
 

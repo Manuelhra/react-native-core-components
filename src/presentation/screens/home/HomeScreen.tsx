@@ -90,8 +90,10 @@ export const HomeScreen = ({}: HomeScreenProps): React.JSX.Element => {
           {animationMenuItems.map(item => (
             <MenuItem
               key={item.component}
-              isFirst={item === menuItems[0]}
-              isLast={item === menuItems[menuItems.length - 1]}
+              isFirst={item === animationMenuItems[0]}
+              isLast={
+                item === animationMenuItems[animationMenuItems.length - 1]
+              }
               {...item}
             />
           ))}
@@ -112,8 +114,8 @@ export const HomeScreen = ({}: HomeScreenProps): React.JSX.Element => {
           {uiMenuItems.map(item => (
             <MenuItem
               key={item.component}
-              isFirst={item === menuItems[0]}
-              isLast={item === menuItems[menuItems.length - 1]}
+              isFirst={item === uiMenuItems[0]}
+              isLast={item === uiMenuItems[uiMenuItems.length - 1]}
               {...item}
             />
           ))}

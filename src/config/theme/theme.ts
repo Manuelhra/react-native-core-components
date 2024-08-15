@@ -14,7 +14,7 @@ export const colors: ThemeColors = {
   text: 'black',
   white: '#fff',
 
-  background: '#F3F2F7',
+  background: '#d6d4dc',
   cardBackground: 'white',
   buttonTextColor: 'white',
 };
