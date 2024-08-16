@@ -1,5 +1,10 @@
 import React, {createContext, useEffect} from 'react';
 import {Appearance, AppState} from 'react-native';
+import {
+  DarkTheme,
+  DefaultTheme,
+  NavigationContainer,
+} from '@react-navigation/native';
 
 import {darkColors, lightColors, ThemeColors} from '../../config/theme/theme';
 
@@ -53,14 +58,19 @@ export const ThemeProvider = ({
     setCurrentTheme(theme);
   };
 
+  const theme = currentTheme === 'dark' ? DarkTheme : DefaultTheme;
+  const colors = currentTheme === 'light' ? lightColors : darkColors;
+
   return (
-    <ThemeContext.Provider
-      value={{
-        currentTheme,
-        colors: currentTheme === 'light' ? lightColors : darkColors,
-        setTheme,
-      }}>
-      {children}
-    </ThemeContext.Provider>
+    <NavigationContainer theme={theme}>
+      <ThemeContext.Provider
+        value={{
+          currentTheme,
+          colors,
+          setTheme,
+        }}>
+        {children}
+      </ThemeContext.Provider>
+    </NavigationContainer>
   );
 };
