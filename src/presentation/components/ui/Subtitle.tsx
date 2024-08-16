@@ -1,7 +1,8 @@
-import React from 'react';
-import {StyleProp, StyleSheet, Text, ViewStyle} from 'react-native';
+import React, {useContext} from 'react';
+import {StyleSheet, Text} from 'react-native';
 
-import {colors, globalStyles} from '../../../config/theme/theme';
+import {globalStyles, ThemeColors} from '../../../config/theme/theme';
+import {ThemeContextType, ThemeContext} from '../../context/ThemeContext';
 
 type SubtitleProps = {
   text: string;
@@ -12,21 +13,28 @@ type SubtitleProps = {
 export const Subtitle = ({
   text,
   safeArea = false,
-  backgroundColor = colors.background,
+  backgroundColor,
 }: SubtitleProps): React.JSX.Element => {
-  const getCustomStyles = (): StyleProp<ViewStyle> => {
-    return {
-      marginTop: safeArea ? 20 : 0,
-      backgroundColor,
-    };
-  };
+  const {colors} = useContext<ThemeContextType>(ThemeContext);
 
-  return <Text style={[styles.subtitle, getCustomStyles()]}>{text}</Text>;
+  const styles = getStyles(colors, safeArea, backgroundColor);
+
+  return <Text style={styles.subtitle}>{text}</Text>;
 };
 
-const styles = StyleSheet.create({
-  subtitle: {
-    ...globalStyles.subTitle,
-    marginBottom: 10,
-  },
-});
+const getStyles = (
+  colors: ThemeColors,
+  safeArea: boolean,
+  backgroundColor?: string,
+) =>
+  StyleSheet.create({
+    subtitle: {
+      ...globalStyles.subTitle,
+      marginBottom: 10,
+      marginTop: safeArea ? 20 : 0,
+      backgroundColor:
+        typeof backgroundColor === 'string'
+          ? backgroundColor
+          : colors.background,
+    },
+  });

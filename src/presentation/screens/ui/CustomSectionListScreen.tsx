@@ -1,17 +1,14 @@
-import React from 'react';
-import {
-  SectionList,
-  StyleProp,
-  Text,
-  useWindowDimensions,
-  ViewStyle,
-} from 'react-native';
+import React, {useContext} from 'react';
+import {SectionList, StyleSheet, Text, useWindowDimensions} from 'react-native';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+
 import {CustomView} from '../../components/ui/CustomView';
 import {Title} from '../../components/ui/Title';
 import {CardComponent} from '../../components/ui/CardComponent';
 import {Subtitle} from '../../components/ui/Subtitle';
 import {Separator} from '../../components/ui/Separator';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {ThemeContextType, ThemeContext} from '../../context/ThemeContext';
+import {ThemeColors} from '../../../config/theme/theme';
 
 interface Houses {
   title: string;
@@ -99,14 +96,12 @@ type CustomSectionListScreenProps = {};
 
 export const CustomSectionListScreen =
   ({}: CustomSectionListScreenProps): React.JSX.Element => {
+    const {colors} = useContext<ThemeContextType>(ThemeContext);
+
     const {height} = useWindowDimensions();
     const {top} = useSafeAreaInsets();
 
-    const getCustomSectionListStyles = (): StyleProp<ViewStyle> => {
-      return {
-        height: height - top - 60,
-      };
-    };
+    const styles = getStyles(colors, height, top);
 
     return (
       <CustomView>
@@ -118,20 +113,26 @@ export const CustomSectionListScreen =
             keyExtractor={(item, index) => item + index}
             showsVerticalScrollIndicator={false}
             stickySectionHeadersEnabled
-            renderItem={({item}) => (
-              <Text style={{color: 'black'}}>{item}</Text>
-            )}
+            renderItem={({item}) => <Text style={styles.item}>{item}</Text>}
             renderSectionHeader={({section}) => (
-              <Subtitle text={section.title} backgroundColor="#b8b2b2" />
+              <Subtitle text={section.title} />
             )}
             SectionSeparatorComponent={Separator}
-            ListHeaderComponent={() => <Title text="Houses" />}
-            ListFooterComponent={() => (
-              <Title text={`Sections: ${houses.length}`} />
-            )}
-            style={getCustomSectionListStyles()}
+            ListHeaderComponent={<Title text="Houses" />}
+            ListFooterComponent={<Title text={`Sections: ${houses.length}`} />}
+            style={styles.listFooterComponent}
           />
         </CardComponent>
       </CustomView>
     );
   };
+
+const getStyles = (colors: ThemeColors, height: number, top: number) =>
+  StyleSheet.create({
+    item: {
+      color: colors.text,
+    },
+    listFooterComponent: {
+      height: height - top - 60,
+    },
+  });
