@@ -11,6 +11,8 @@ import {PullToRefreshScreen} from '../screens/ui/PullToRefreshScreen';
 import {CustomSectionListScreen} from '../screens/ui/CustomSectionListScreen';
 import {ModalScreen} from '../screens/ui/ModalScreen';
 import {InfiniteScrollScreen} from '../screens/ui/InfiniteScrollScreen';
+import {SlidesScreen} from '../screens/ui/SlidesScreen';
+import {ChangeThemeScreen} from '../screens/themes/ChangeThemeScreen';
 
 export type NavigationParams = {
   homeScreen: undefined;
@@ -58,6 +60,8 @@ export const Navigation = ({}: NavigationProps): React.JSX.Element => {
         name="infiniteScrollScreen"
         component={InfiniteScrollScreen}
       />
+      <Stack.Screen name="slidesScreen" component={SlidesScreen} />
+      <Stack.Screen name="changeThemeScreen" component={ChangeThemeScreen} />
     </Stack.Navigator>
   );
 };

@@ -15,7 +15,7 @@ export const SwitchScreen = ({}: SwitchScreenProps): React.JSX.Element => {
 
   return (
     <CustomView style={customStyles.container}>
-      <CardComponent>
+      <CardComponent styles={customStyles.cardComponent}>
         <CustomSwitch
           text="Is On"
           isOn={isOn}
@@ -25,7 +25,7 @@ export const SwitchScreen = ({}: SwitchScreenProps): React.JSX.Element => {
 
       <Separator />
 
-      <CardComponent>
+      <CardComponent styles={customStyles.cardComponent}>
         <CustomSwitch
           text="Is Hungry ?"
           isOn={isHungry}
@@ -35,7 +35,7 @@ export const SwitchScreen = ({}: SwitchScreenProps): React.JSX.Element => {
 
       <Separator />
 
-      <CardComponent>
+      <CardComponent styles={customStyles.cardComponent}>
         <CustomSwitch
           text="Is Happy ?"
           isOn={isHappy}
@@ -48,7 +48,10 @@ export const SwitchScreen = ({}: SwitchScreenProps): React.JSX.Element => {
 
 const customStyles = StyleSheet.create({
   container: {
-    marginTop: 100,
-    paddingHorizontal: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  cardComponent: {
+    minWidth: 200,
   },
 });

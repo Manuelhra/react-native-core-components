@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {
   KeyboardAvoidingView,
   ScrollView,
@@ -11,17 +11,26 @@ import {
 import {CustomView} from '../../components/ui/CustomView';
 import {Title} from '../../components/ui/Title';
 import {CardComponent} from '../../components/ui/CardComponent';
-import {globalStyles} from '../../../config/theme/theme';
+import {globalStyles, ThemeColors} from '../../../config/theme/theme';
+import {
+  ThemeContextType,
+  ThemeContext,
+  ThemeColor,
+} from '../../context/ThemeContext';
 
 type TextInputScreenProps = {};
 
 export const TextInputScreen =
   ({}: TextInputScreenProps): React.JSX.Element => {
+    const {colors, currentTheme} = useContext<ThemeContextType>(ThemeContext);
+
     const [form, setForm] = useState({
       name: '',
       email: '',
       phone: '',
     });
+
+    const styles = getStyles(colors, currentTheme);
 
     return (
       <KeyboardAvoidingView behavior="padding">
@@ -31,7 +40,7 @@ export const TextInputScreen =
 
             <CardComponent>
               <TextInput
-                style={globalStyles.input}
+                style={styles.textInput}
                 placeholder="Enter your name"
                 autoCapitalize="words"
                 autoCorrect={false}
@@ -39,7 +48,7 @@ export const TextInputScreen =
               />
 
               <TextInput
-                style={globalStyles.input}
+                style={styles.textInput}
                 placeholder="Enter your email"
                 autoCapitalize="none"
                 autoCorrect={false}
@@ -48,7 +57,7 @@ export const TextInputScreen =
               />
 
               <TextInput
-                style={globalStyles.input}
+                style={styles.textInput}
                 placeholder="Enter your phone"
                 keyboardType="phone-pad"
                 onChangeText={value => setForm({...form, phone: value})}
@@ -113,11 +122,18 @@ export const TextInputScreen =
     );
   };
 
-const styles = StyleSheet.create({
-  separator: {
-    height: 10,
-  },
-  jsonText: {
-    color: 'black',
-  },
-});
+const getStyles = (colors: ThemeColors, currentTheme: ThemeColor) =>
+  StyleSheet.create({
+    separator: {
+      height: 10,
+    },
+    jsonText: {
+      color: colors.text,
+    },
+    textInput: {
+      ...globalStyles.input,
+      color: colors.text,
+      borderColor:
+        currentTheme === 'light' ? 'rgba(0,0,0,0.2)' : 'rgba(255,255,255,0.2)',
+    },
+  });

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {StyleSheet, Text} from 'react-native';
-import {colors, globalStyles} from '../../../config/theme/theme';
+import {globalStyles, ThemeColors} from '../../../config/theme/theme';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {ThemeContextType, ThemeContext} from '../../context/ThemeContext';
 
 type TitleProps = {
   text: string;
@@ -14,34 +15,26 @@ export const Title = ({
   safe = false,
   white = false,
 }: TitleProps): React.JSX.Element => {
+  const {colors} = useContext<ThemeContextType>(ThemeContext);
   const {top} = useSafeAreaInsets();
 
-  const getCustomStyles = (): {color: string; marginTop: number} => {
-    let customStyles: {color: string; marginTop: number} = {
-      color: colors.text,
-      marginTop: 0,
-    };
+  const styles = getStyles({colors, safe: {applySafe: safe, top}, white});
 
-    if (white) {
-      customStyles.color = colors.white;
-    }
-
-    if (safe) {
-      customStyles.marginTop = top;
-    }
-
-    return customStyles;
-  };
-
-  return (
-    <Text style={[globalStyles.title, styles.customTitle, getCustomStyles()]}>
-      {text}
-    </Text>
-  );
+  return <Text style={styles.customTitle}>{text}</Text>;
 };
 
-const styles = StyleSheet.create({
-  customTitle: {
-    marginBottom: 10,
-  },
-});
+interface GetStylesProps {
+  colors: ThemeColors;
+  white: boolean;
+  safe: {applySafe: boolean; top: number};
+}
+
+const getStyles = ({colors, safe, white}: GetStylesProps) =>
+  StyleSheet.create({
+    customTitle: {
+      ...globalStyles.title,
+      marginBottom: 10,
+      color: white ? colors.white : colors.text,
+      marginTop: safe.applySafe ? safe.top : 0,
+    },
+  });

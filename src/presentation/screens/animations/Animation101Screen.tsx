@@ -1,14 +1,9 @@
 import React from 'react';
-import {
-  Animated,
-  Easing,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {Animated, Easing, Pressable, StyleSheet, Text} from 'react-native';
+
 import {colors} from '../../../config/theme/theme';
 import {useAnimation} from '../../hooks/useAnimation';
+import {CustomView} from '../../components/ui/CustomView';
 
 type Animation101ScreenProps = {};
 
@@ -28,7 +23,7 @@ export const Animation101Screen =
     };
 
     return (
-      <View style={styles.container}>
+      <CustomView style={styles.container}>
         <Animated.View style={[styles.purpleBox, customPurpleBoxStyle]} />
 
         <Pressable
@@ -46,7 +41,7 @@ export const Animation101Screen =
         <Pressable style={styles.button} onPress={() => fadeOut({})}>
           <Text>FadeOut</Text>
         </Pressable>
-      </View>
+      </CustomView>
     );
   };
 

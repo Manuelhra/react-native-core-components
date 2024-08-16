@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
-import {colors} from '../../../config/theme/theme';
+
+import {ThemeContext, ThemeContextType} from '../../context/ThemeContext';
 
 type CustomViewProps = {
   style?: StyleProp<ViewStyle>;
@@ -11,12 +12,22 @@ export const CustomView = ({
   style,
   children,
 }: CustomViewProps): React.JSX.Element => {
-  return <View style={[customStyles.container, style]}>{children}</View>;
+  const {colors} = useContext<ThemeContextType>(ThemeContext);
+
+  return (
+    <View
+      style={[
+        customStyles.container,
+        {backgroundColor: colors.background},
+        style,
+      ]}>
+      {children}
+    </View>
+  );
 };
 
 const customStyles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background,
   },
 });

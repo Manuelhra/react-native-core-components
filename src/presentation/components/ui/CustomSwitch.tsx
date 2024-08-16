@@ -1,6 +1,8 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Platform, StyleSheet, Switch, Text, View} from 'react-native';
-import {colors} from '../../../config/theme/theme';
+
+import {ThemeContextType, ThemeContext} from '../../context/ThemeContext';
+import {ThemeColors} from '../../../config/theme/theme';
 
 type CustomSwitchProps = {
   isOn: boolean;
@@ -13,9 +15,13 @@ export const CustomSwitch = ({
   text,
   onToggle,
 }: CustomSwitchProps): React.JSX.Element => {
+  const {colors} = useContext<ThemeContextType>(ThemeContext);
+
+  const styles = getStyles(colors);
+
   return (
-    <View style={customStyles.switchRow}>
-      {text && <Text style={customStyles.text}>{text}</Text>}
+    <View style={styles.switchRow}>
+      {text && <Text style={styles.text}>{text}</Text>}
 
       <Switch
         thumbColor={Platform.OS === 'android' ? colors.primary : ''}
@@ -28,13 +34,14 @@ export const CustomSwitch = ({
   );
 };
 
-const customStyles = StyleSheet.create({
-  switchRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  text: {
-    color: colors.text,
-  },
-});
+const getStyles = (colors: ThemeColors) =>
+  StyleSheet.create({
+    switchRow: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+    },
+    text: {
+      color: colors.text,
+    },
+  });

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Pressable, StyleProp, StyleSheet, Text, ViewStyle} from 'react-native';
 
-import {colors, globalStyles} from '../../../config/theme/theme';
+import {globalStyles, ThemeColors} from '../../../config/theme/theme';
+import {ThemeContextType, ThemeContext} from '../../context/ThemeContext';
 
 type ButtonProps = {
   text: string;
@@ -14,6 +15,9 @@ export const Button = ({
   styles,
   onPress,
 }: ButtonProps): React.JSX.Element => {
+  const {colors} = useContext<ThemeContextType>(ThemeContext);
+  const customStyles = getStyles(colors);
+
   return (
     <Pressable
       style={({pressed}) => [
@@ -22,21 +26,23 @@ export const Button = ({
         styles,
       ]}
       onPress={onPress}>
-      <Text>{text}</Text>
+      <Text style={customStyles.text}>{text}</Text>
     </Pressable>
   );
 };
 
-const customStyles = StyleSheet.create({
-  container: {
-    ...globalStyles.btnPrimary,
-    opacity: 1,
-  },
-  buttonPressed: {
-    opacity: 0.8,
-  },
-  text: {
-    ...globalStyles.btnPrimaryText,
-    color: colors.buttonTextColor,
-  },
-});
+const getStyles = (colors: ThemeColors) =>
+  StyleSheet.create({
+    container: {
+      ...globalStyles.btnPrimary,
+      opacity: 1,
+      backgroundColor: colors.primary,
+    },
+    buttonPressed: {
+      opacity: 0.8,
+    },
+    text: {
+      ...globalStyles.btnPrimaryText,
+      color: colors.buttonTextColor,
+    },
+  });

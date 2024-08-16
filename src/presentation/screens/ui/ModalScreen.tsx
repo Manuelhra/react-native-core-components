@@ -1,24 +1,23 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
+import {Modal, StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {CustomView} from '../../components/ui/CustomView';
 import {Title} from '../../components/ui/Title';
-import {
-  Modal,
-  Pressable,
-  StyleProp,
-  StyleSheet,
-  Text,
-  View,
-  ViewStyle,
-} from 'react-native';
 import {Button} from '../../components/ui/Button';
-import {colors} from '../../../config/theme/theme';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {
+  ThemeColor,
+  ThemeContext,
+  ThemeContextType,
+} from '../../context/ThemeContext';
 
 type ModalScreenProps = {};
 
 export const ModalScreen = ({}: ModalScreenProps): React.JSX.Element => {
+  const {currentTheme} = useContext<ThemeContextType>(ThemeContext);
   const {bottom} = useSafeAreaInsets();
+
+  const styles = getStyles(currentTheme);
 
   const getCustomStyle = (): StyleProp<ViewStyle> => {
     return {
@@ -28,7 +27,7 @@ export const ModalScreen = ({}: ModalScreenProps): React.JSX.Element => {
 
   const [isVisible, setIsVisible] = useState(false);
   return (
-    <CustomView>
+    <CustomView style={styles.container}>
       <Title text="Modal" safe />
 
       <Button text="Open modal" onPress={() => setIsVisible(true)} />
@@ -38,34 +37,35 @@ export const ModalScreen = ({}: ModalScreenProps): React.JSX.Element => {
           <View style={styles.modalContent}>
             <Title text="Modal Content" safe />
           </View>
-          <Pressable
-            style={styles.closeButton}
-            onPress={() => setIsVisible(false)}>
-            <Text style={styles.buttonText}>Close</Text>
-          </Pressable>
+
+          <Button
+            text="Close"
+            onPress={() => setIsVisible(false)}
+            styles={styles.closeButton}
+          />
         </View>
       </Modal>
     </CustomView>
   );
 };
 
-const styles = StyleSheet.create({
-  modalContainer: {
-    flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.1)',
-  },
-  modalContent: {
-    flex: 1,
-    paddingHorizontal: 10,
-    justifyContent: 'space-between',
-  },
-  closeButton: {
-    backgroundColor: colors.primary,
-    padding: 10,
-    width: '100%',
-  },
-  buttonText: {
-    color: colors.buttonTextColor,
-    textAlign: 'center',
-  },
-});
+const getStyles = (currentTheme: ThemeColor) =>
+  StyleSheet.create({
+    container: {
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    modalContainer: {
+      flex: 1,
+      backgroundColor:
+        currentTheme === 'light' ? 'rgba(0,0,0,0.1)' : 'rgba(0,0,0,0.5)',
+    },
+    modalContent: {
+      flex: 1,
+      paddingHorizontal: 10,
+      justifyContent: 'space-between',
+    },
+    closeButton: {
+      borderRadius: 0,
+    },
+  });

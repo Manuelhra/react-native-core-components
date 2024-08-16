@@ -6,6 +6,7 @@ import {globalStyles} from '../../../config/theme/theme';
 import {Title} from '../../components/ui/Title';
 import {MenuItem} from '../../components/ui/MenuItem';
 import {NavigationParams} from '../../navigation/Navigation';
+import {CustomView} from '../../components/ui/CustomView';
 
 type Item = {
   name: string;
@@ -82,7 +83,7 @@ type HomeScreenProps = {};
 
 export const HomeScreen = ({}: HomeScreenProps): React.JSX.Element => {
   return (
-    <View style={globalStyles.mainContainer}>
+    <CustomView>
       <View style={globalStyles.globalMargin}>
         <ScrollView>
           <Title text="Opciones del Menu" safe />
@@ -121,7 +122,7 @@ export const HomeScreen = ({}: HomeScreenProps): React.JSX.Element => {
           ))}
         </ScrollView>
       </View>
-    </View>
+    </CustomView>
   );
 };
 

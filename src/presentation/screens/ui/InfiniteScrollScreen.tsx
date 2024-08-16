@@ -25,7 +25,7 @@ export const InfiniteScrollScreen =
     };
 
     return (
-      <CustomView style={styles.container}>
+      <CustomView>
         <FlatList
           data={numbers}
           onEndReached={loadMore}
@@ -59,9 +59,6 @@ const ActivityIndicatorComponent = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: 'black',
-  },
   item: {
     height: 400,
     width: '100%',
